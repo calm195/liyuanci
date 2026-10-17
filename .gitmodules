@@ -1,0 +1,12 @@
+[submodule "docs"]
+	path = docs
+	url = git@github.com:calm195/docs.git
+[submodule "liyuanci-admin-vue"]
+	path = liyuanci-admin-vue
+	url = git@github.com:calm195/liyuanci-admin-vue.git
+[submodule "liyuanci-backend-go"]
+	path = liyuanci-backend-go
+	url = git@github.com:calm195/liyuanci-backend-go.git
+[submodule "liyuanci-miniprogram-uniapp"]
+	path = liyuanci-miniprogram-uniapp
+	url = git@github.com:calm195/liyuanci-miniprogram-uniapp.git
