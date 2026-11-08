@@ -17,6 +17,8 @@
 
 ## 当前功能与审核结论
 
+两端操作反馈复用可关闭、定时消失的悬浮通知；展示名称通过[统一字典协议](docs/contracts/display-dictionaries.v0.2.1-r1.md)由管理端维护并保存到数据库。字典改名不改变业务代码、权限或状态流转；举报类型使用现有业务表独立管理。配套迁移、API与前端须按[交付顺序](docs/plans/README.md)更新。
+
 三端当前功能、2026-11-08全仓库审核修复及验证边界分别维护于[后端现状](docs/development/backend/README.md)、[管理端现状](docs/development/admin/README.md)、[小程序现状](docs/development/miniprogram/README.md)。本次审核覆盖主仓库及四个子仓库的受跟踪文件，结合全仓库引用/入口检查、关键调用链审阅和自动回归；不将本地结果等同生产、供应商或真机验收。配套源码版本由子模块指针和各端现状记录；Git提交与推送不等同生产部署或小程序上传。
 
 ## 获取项目
