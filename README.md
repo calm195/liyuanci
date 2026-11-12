@@ -19,7 +19,7 @@
 
 两端操作反馈复用可关闭、定时消失的悬浮通知；展示名称通过[统一字典协议](docs/contracts/display-dictionaries.v0.2.1-r1.md)由管理端维护并保存到数据库。字典改名不改变业务代码、权限或状态流转；举报类型使用现有业务表独立管理。配套迁移、API与前端须按[交付顺序](docs/plans/README.md)更新。
 
-三端当前功能、2026-11-08全仓库审核修复及验证边界分别维护于[后端现状](docs/development/backend/README.md)、[管理端现状](docs/development/admin/README.md)、[小程序现状](docs/development/miniprogram/README.md)。本次审核覆盖主仓库及四个子仓库的受跟踪文件，结合全仓库引用/入口检查、关键调用链审阅和自动回归；不将本地结果等同生产、供应商或真机验收。配套源码版本由子模块指针和各端现状记录；Git提交与推送不等同生产部署或小程序上传。
+三端当前功能与验证边界分别维护于[后端现状](docs/development/backend/README.md)、[管理端现状](docs/development/admin/README.md)、[小程序现状](docs/development/miniprogram/README.md)。本轮[全仓审核](docs/reviews/full-code-review-2026-11-13.md)记录静态分析、依赖安全、关键调用链和自动回归的实际范围。本轮维护改动已提交至各源码仓库 develop，已有部署/上传版本与源码版本分别记录；本地结果不替代生产、真实供应商和真机验收。
 
 ## 获取项目
 
@@ -56,7 +56,7 @@ git submodule status
 | Web 管理端 | `pnpm install --frozen-lockfile`、`pnpm dev` | `pnpm format`、`pnpm check`、`pnpm build` |
 | 微信小程序 | `npm ci`、`npm run dev:mp-weixin` | `npm run check`、`npm run build:mp-weixin` |
 
-以上命令均在对应子模块目录执行。后端使用 Go 1.25 或更新版本；管理端使用 pnpm 10，小程序使用 Node 22.13 或更新版本，详细版本约束以子项目配置为准。小程序开发构建后，使用微信开发者工具导入 `dist/dev/mp-weixin`。
+以上命令均在对应子模块目录执行。后端使用 Go 1.27.4 或更新版本；管理端使用 pnpm 10，小程序使用 Node 22.13 或更新版本，详细版本约束以子项目配置为准。小程序开发构建后，使用微信开发者工具导入 `dist/dev/mp-weixin`。
 
 共享接口契约入口为 [docs/contracts/README.md](docs/contracts/README.md)。本地环境配置按子项目示例填写，密钥、真实令牌和本地凭据不得提交。
 
@@ -68,7 +68,7 @@ git submodule status
 # 子项目的提交已推送后，在根目录记录配套版本
 git add liyuanci-backend-go
 git commit -m "chore: update backend submodule"
-git push origin main
+git push origin develop
 ```
 
 根仓库的 `git push` 不会自动推送子项目提交。日常同步使用 `git submodule update --init --recursive` 获取已记录版本；升级模块版本时，应先在子模块中明确选择并验证目标提交，再更新根仓库指针。
