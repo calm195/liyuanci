@@ -2,18 +2,24 @@
 
 鲤源池是面向华南理工大学的微信生态校园互助平台。本仓库作为项目总入口，通过 Git 子模块统一管理需求设计、Go 后端、Web 管理端和微信小程序，记录各模块配套的提交版本。
 
-平台围绕文字许愿互助，涵盖学生认证、心愿发布与审核、心愿广场、应愿、临时聊天、完成与还愿，以及必要的运营管理；后续已扩展悄悄鲤、平台用户管理和资料广场。具体需求、实现范围与审批状态以 [需求与设计工作台](docs/README.md) 中的材料为准。
+平台围绕文字许愿互助，涵盖学生认证、心愿发布与审核、心愿广场、应愿、临时聊天、完成与还愿，以及必要的运营管理；已扩展悄悄鲤、时光胶囊、平台用户管理、文件资料广场、内容搜索和热点榜单。具体需求、实现范围与审批状态以 [需求与设计工作台](docs/README.md) 中的材料为准。
 
 ## 仓库结构
 
 | 子模块 | 职责 | 主要技术 |
 | --- | --- | --- |
 | [docs](docs/README.md) | 需求、设计、审批、评审、实施计划与共享接口契约 | Markdown、Python 检查脚本 |
-| [liyuanci-backend-go](liyuanci-backend-go/README.md) | API 与独立 worker，承载服务端业务 | Go、PostgreSQL、Redis、RocketMQ |
+| [liyuanci-backend-go](liyuanci-backend-go/README.md) | API 与独立 worker，承载服务端业务 | Go、PostgreSQL、Redis、数据库持久任务 |
 | [liyuanci-admin-vue](liyuanci-admin-vue/README.md) | Web 运营与管理入口 | Vue 3、TypeScript、Vite、Pinia |
 | [liyuanci-miniprogram-uniapp](liyuanci-miniprogram-uniapp/README.md) | 微信小程序用户端 | uni-app、Vue 3、TypeScript、Pinia |
 
 当前已有认证、心愿互动、悄悄鲤及后台治理等模块实现，并提供本地开发与联调入口。已归档本地 HTTP、浏览器及合成数据验证，微信真机、真实外部供应商与生产验收仍需单独完成。各模块的实际实现、验证结果与未完成依赖见各自 README 和 docs 端内索引；接口定义不代表接口已实现。
+
+## 当前功能与审核结论
+
+两端操作反馈复用可关闭、定时消失的悬浮通知；展示名称通过[统一字典协议](docs/contracts/display-dictionaries.v0.2.1-r1.md)由管理端维护并保存到数据库。字典改名不改变业务代码、权限或状态流转；举报类型使用现有业务表独立管理。配套迁移、API与前端须按[交付顺序](docs/plans/README.md)更新。
+
+三端当前功能与验证边界分别维护于[后端现状](docs/development/backend/README.md)、[管理端现状](docs/development/admin/README.md)、[小程序现状](docs/development/miniprogram/README.md)。本轮[全仓审核](docs/reviews/full-code-review-2026-11-13.md)记录静态分析、依赖安全、关键调用链和自动回归的实际范围。本轮维护改动已提交至各源码仓库 develop，已有部署/上传版本与源码版本分别记录；本地结果不替代生产、真实供应商和真机验收。
 
 ## 获取项目
 
@@ -50,7 +56,7 @@ git submodule status
 | Web 管理端 | `pnpm install --frozen-lockfile`、`pnpm dev` | `pnpm format`、`pnpm check`、`pnpm build` |
 | 微信小程序 | `npm ci`、`npm run dev:mp-weixin` | `npm run check`、`npm run build:mp-weixin` |
 
-以上命令均在对应子模块目录执行。后端使用 Go 1.25 或更新版本；管理端使用 pnpm 10，小程序使用 Node 22.13 或更新版本，详细版本约束以子项目配置为准。小程序开发构建后，使用微信开发者工具导入 `dist/dev/mp-weixin`。
+以上命令均在对应子模块目录执行。后端使用 Go 1.27.4 或更新版本；管理端使用 pnpm 10，小程序使用 Node 22.13 或更新版本，详细版本约束以子项目配置为准。小程序开发构建后，使用微信开发者工具导入 `dist/dev/mp-weixin`。
 
 共享接口契约入口为 [docs/contracts/README.md](docs/contracts/README.md)。本地环境配置按子项目示例填写，密钥、真实令牌和本地凭据不得提交。
 
@@ -62,7 +68,7 @@ git submodule status
 # 子项目的提交已推送后，在根目录记录配套版本
 git add liyuanci-backend-go
 git commit -m "chore: update backend submodule"
-git push origin main
+git push origin develop
 ```
 
 根仓库的 `git push` 不会自动推送子项目提交。日常同步使用 `git submodule update --init --recursive` 获取已记录版本；升级模块版本时，应先在子模块中明确选择并验证目标提交，再更新根仓库指针。
